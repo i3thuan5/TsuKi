@@ -1,0 +1,2 @@
+docker network connect hok8bu7_default nginx-proxy
+docker network connect su5sing3_default nginx-proxy
