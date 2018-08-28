@@ -7,7 +7,10 @@ docker run -d -p 80:80 -p 443:443 \
     -v /var/run/docker.sock:/tmp/docker.sock:ro \
     --label com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy \
     jwilder/nginx-proxy
+echo 'proxy_cache_path /var/cache/nginx-voice levels=1:2 keys_zone=voice_cache:20m max_size=10g inactive=30d ;' | docker exec -i nginx-proxy tee /etc/nginx/conf.d/cache
 echo 'client_max_body_size 100m;' | docker exec -i nginx-proxy tee /etc/nginx/vhost.d/default
+
+cat hokbu_cache | docker exec -i nginx-proxy tee /etc/nginx/vhost.d/xn--lhrz38b.xn--v0qr21b.xn--kpry57d
 
 docker run -d \
     --name nginx-proxy-https \
