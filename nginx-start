@@ -1,5 +1,7 @@
+docker network create nginx-bridge
 docker run -d -p 80:80 -p 443:443 \
     --name nginx-proxy \
+	 --network nginx-bridge \
     --restart always \
 	 -e DEFAULT_HOST=xn--lhrz38b.xn--v0qr21b.xn--kpry57d \
     -v /path/to/certs:/etc/nginx/certs:ro \
@@ -10,6 +12,7 @@ docker run -d -p 80:80 -p 443:443 \
     jwilder/nginx-proxy
 docker run -d \
     --name nginx-proxy-https \
+	 --network nginx-bridge \
     --restart always \
     -v /path/to/certs:/etc/nginx/certs:rw \
     -v /var/run/docker.sock:/var/run/docker.sock:ro \
