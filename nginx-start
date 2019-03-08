@@ -4,19 +4,17 @@ docker run -d -p 80:80 -p 443:443 \
     --network nginx-bridge \
     --restart always \
     -e DEFAULT_HOST=xn--lhrz38b.xn--v0qr21b.xn--kpry57d \
-    -v /path/to/certs:/etc/nginx/certs:ro \
+    -v /etc/nginx/certs \
     -v /etc/nginx/vhost.d \
     -v /usr/share/nginx/html \
     -v /var/run/docker.sock:/tmp/docker.sock:ro \
-    --label com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy \
     jwilder/nginx-proxy
 docker run -d \
     --name nginx-proxy-https \
     --network nginx-bridge \
     --restart always \
-    -v /path/to/certs:/etc/nginx/certs:rw \
-    -v /var/run/docker.sock:/var/run/docker.sock:ro \
     --volumes-from nginx-proxy \
+    -v /var/run/docker.sock:/var/run/docker.sock:ro \
     jrcs/letsencrypt-nginx-proxy-companion
 
 echo 'proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=voice_cache:20m max_size=10g inactive=30d ;' | docker exec -i nginx-proxy tee /etc/nginx/conf.d/cache.conf
