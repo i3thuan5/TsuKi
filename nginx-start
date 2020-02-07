@@ -3,7 +3,6 @@ docker run -d -p 80:80 -p 443:443 \
     --name nginx-proxy \
     --network nginx-bridge \
     --restart always \
-    -e DEFAULT_HOST=xn--lhrz38b.xn--v0qr21b.xn--kpry57d \
     -v /etc/nginx/certs \
     -v /etc/nginx/vhost.d \
     -v /usr/share/nginx/html \
