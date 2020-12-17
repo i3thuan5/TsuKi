@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./vhost.d:/etc/nginx/vhost.d
+      - cert_data:/etc/nginx/certs
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+  nginx-proxy-https:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - ./vhost.d:/etc/nginx/vhost.d
+      - cert_data:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      DEFAULT_EMAIL: ithuan@ithuan.tw
+    restart: always
+
+volumes:
+  cert_data:
+docker network create nginx-bridge
+docker run -d 
+    --network nginx-bridge \
+    
+docker run -d \
+    --network nginx-bridge \
+
+echo 'proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=voice_cache:20m max_size=10g inactive=30d ;' | docker exec -i nginx-proxy tee /etc/nginx/conf.d/cache.conf
+
+
+#echo 'client_max_body_size 100m;' | docker exec -i nginx-proxy tee /etc/nginx/vhost.d/default
+
