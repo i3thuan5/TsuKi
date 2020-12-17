@@ -11,6 +11,9 @@ services:
       - ./conf.d:/etc/nginx/conf.d
       - cert_data:/etc/nginx/certs
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - default
+      - nginx-bridge
     restart: always
   nginx-proxy-https:
     image: jrcs/letsencrypt-nginx-proxy-companion
@@ -24,9 +27,7 @@ services:
 
 volumes:
   cert_data:
-docker network create nginx-bridge
-docker run -d 
-    --network nginx-bridge \
-    
-docker run -d \
-    --network nginx-bridge \
+
+networks:
+  nginx-bridge:
+    name: nginx-bridge
