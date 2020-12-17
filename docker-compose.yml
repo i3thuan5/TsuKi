@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./vhost.d:/etc/nginx/vhost.d
+      - ./conf.d:/etc/nginx/conf.d
+      - cert_data:/etc/nginx/certs
+      - html_data:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - default
+      - nginx-bridge
+    restart: always
+  nginx-proxy-https:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - ./vhost.d:/etc/nginx/vhost.d
+      - cert_data:/etc/nginx/certs
+      - html_data:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      DEFAULT_EMAIL: ithuan@ithuan.tw
+    restart: always
+
+volumes:
+  cert_data:
+  html_data:
+
+networks:
+  nginx-bridge:
+    name: nginx-bridge
