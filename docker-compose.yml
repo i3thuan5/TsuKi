@@ -12,6 +12,7 @@ services:
       - ./vhost.d:/etc/nginx/vhost.d
       - ./conf.d:/etc/nginx/conf.d
       - cert_data:/etc/nginx/certs
+      - html_data:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - default
@@ -22,6 +23,7 @@ services:
     volumes:
       - ./vhost.d:/etc/nginx/vhost.d
       - cert_data:/etc/nginx/certs
+      - html_data:/usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       DEFAULT_EMAIL: ithuan@ithuan.tw
@@ -29,6 +31,7 @@ services:
 
 volumes:
   cert_data:
+  html_data:
 
 networks:
   nginx-bridge:
