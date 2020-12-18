@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   nginx-proxy:
-    image: jwilder/nginx-proxy
+    build: .
     labels:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
     ports:
@@ -10,7 +10,6 @@ services:
       - 443:443
     volumes:
       - ./vhost.d:/etc/nginx/vhost.d
-      - ./conf.d:/etc/nginx/conf.d
       - cert_data:/etc/nginx/certs
       - html_data:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
