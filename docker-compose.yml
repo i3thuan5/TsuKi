@@ -18,10 +18,10 @@ services:
       - default
       - nginx-bridge
     logging:
-        driver: "json-file"
-        options:
-            max-file: 5
-            max-size: 10m
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "10"
     restart: always
   nginx-proxy-https:
     image: jrcs/letsencrypt-nginx-proxy-companion
@@ -33,10 +33,10 @@ services:
     environment:
       DEFAULT_EMAIL: ithuan@ithuan.tw
     logging:
-        driver: "json-file"
-        options:
-            max-file: 5
-            max-size: 10m
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "10"
     restart: always
 
 volumes:
